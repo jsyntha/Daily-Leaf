@@ -21,6 +21,7 @@ body {
 }
 
 .icon {
+    all: unset;
     padding: 0.5rem 1rem;
     border-radius: 12px;
     background-color: #6ec007;
@@ -30,20 +31,23 @@ body {
 }
 
 .dropdown {
+    display: none;
+    margin-top:0.5rem;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.dropdown.visible {
+    display: flex;
+}
+
+.dropdown-item {
     margin-top: 0.5rem;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-item {
-    padding: 04.rem 0.8rem;
-    border-radius: 8px;
-    margin: 0.2rem 0;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
 }
 
 .dropdown-item:hover {
