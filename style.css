@@ -28,6 +28,7 @@ body {
     color: white;
     cursor: pointer;
     text-align: center;
+    transition: background-color 0.2s ease;
 }
 
 .icon-active {
