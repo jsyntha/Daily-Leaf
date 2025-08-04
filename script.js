@@ -9,6 +9,7 @@ iconButtons.forEach(button => {
 
     if (dropdown) {
       dropdown.classList.toggle("visible");
+      button.classList.toggle("icon-active");
     }
   });
 });
