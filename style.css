@@ -64,3 +64,13 @@ body {
 .dropdown-item:hover {
     background-color: #f5eec7;
 }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
