@@ -6,6 +6,29 @@ body {
     background-color: #fadfad;
 }
 
+.motd {
+  margin: 1rem 0 0 1rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: white;
+  width: fit-content;
+}
+
+.motd h1 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.motd p {
+  font-size: 0.95rem;
+  margin: 0.4rem 0 0 0;
+  opacity: 0.9;
+}
+
 #toolbar {
     display: flex;
     gap: 1rem;
