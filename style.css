@@ -30,17 +30,23 @@ body {
 }
 
 #toolbar {
+    position: relative;
     display: flex;
     gap: 1rem;
     padding: 1rem;
+    flex-wrap: wrap;
     /*background-color: #a39170;*/
 }
 
 .toolbar-item {
+    /*position: absolute;*/
+    cursor: grab;
+}
+
+.drag-handle {
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
 }
 
 .icon {
@@ -62,7 +68,6 @@ body {
   filter: brightness(1.1);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
 
 .dropdown {
     display: none;
