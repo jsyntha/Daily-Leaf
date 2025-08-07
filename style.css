@@ -30,17 +30,18 @@ body {
 }
 
 #toolbar {
-    position: relative;
-    display: flex;
-    gap: 1rem;
-    padding: 1rem;
-    flex-wrap: wrap;
-    /*background-color: #a39170;*/
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 1rem;
+  flex-wrap: wrap;
 }
 
 .toolbar-item {
-    /*position: absolute;*/
-    cursor: grab;
+  position: relative;
+  cursor: grab;
+  width: max-content;
 }
 
 .drag-handle {
