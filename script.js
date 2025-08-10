@@ -79,3 +79,17 @@ document.querySelectorAll(".toolbar-item").forEach(item => {
   tick();
   setInterval(tick, 1000);
 })();
+
+(function initTempUser() {
+  const el = document.getElementById("user-name");
+  if (!el) return;
+  const stored = typeof localStorage !== "undefined" ? localStorage.getItem("dl_user_name") : null;
+  const user = stored && stored.trim() ? stored.trim() : "Leafling";
+  el.textContent = user;
+})();
+
+window.setDailyLeafUser = function(name) {
+  try { localStorage.setItem("dl_user_name", String(name || "").trim()); } catch {}
+  const el = document.getElementById("user-name");
+  if (el) el.textContent = String(name || "").trim() || "Leafling";
+};
