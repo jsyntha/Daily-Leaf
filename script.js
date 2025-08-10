@@ -44,3 +44,38 @@ document.querySelectorAll(".toolbar-item").forEach(item => {
         isDragging = false;
     });
 });
+
+(function initDateTime() {
+  const el = document.getElementById("date-time");
+  if (!el) return;
+
+  const tz = "Europe/Dublin";
+  const fmt = new Intl.DateTimeFormat("en-IE", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: tz,
+  });
+
+  function tick() {
+    const now = new Date();
+    el.textContent = fmt.format(now);
+    try {
+      const iso = new Intl.DateTimeFormat("sv-SE", {
+        timeZone: tz,
+        hour12: false,
+        year: "numeric", month: "2-digit", day: "2-digit",
+        hour: "2-digit", minute: "2-digit", second: "2-digit"
+      }).format(now).replace(" ", "T");
+      el.setAttribute("datetime", iso);
+    } catch (_) {}
+  }
+
+  tick();
+  setInterval(tick, 1000);
+})();
