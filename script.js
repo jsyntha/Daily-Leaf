@@ -13,3 +13,12 @@ iconButtons.forEach(button => {
     }
   });
 });
+
+const debugDot = document.createElement("div");
+debugDot.classList.add("debug-dot");
+document.body.appendChild(debugDot);
+
+document.addEventListener("mousemove", (e) => {
+  debugDot.style.left = e.clientX + "px";
+  debugDot.style.top = e.clientY + "px";
+})

@@ -104,3 +104,15 @@ footer {
   color: #666;
   font-size: 0.9rem;
 }
+
+.debug-outline { outline: 2px dashed red; }
+.debug-outline-parent { outline: 2px dashed blue; }
+.debug-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: red;
+  pointer-events: none;
+  translate: -50% -50%;
+}
