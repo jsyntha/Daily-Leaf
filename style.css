@@ -104,3 +104,5 @@ footer {
   color: #666;
   font-size: 0.9rem;
 }
+
+#time-section time { display: inline-block; min-width: 22ch; }
