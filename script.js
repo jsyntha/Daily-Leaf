@@ -2,15 +2,47 @@ console.log("Daily Leaf script loaded!");
 
 const iconButtons = document.querySelectorAll(".icon");
 
-iconButtons.forEach(button => {
-  button.addEventListener("click", () => {
-    const toolbarItem = button.closest(".toolbar-item");
-    const dropdown = toolbarItem.querySelector(".dropdown");
+function toggleDropdownFor(button) {
+  const toolbarItem = button.closest(".toolbar-item");
+  const dropdown = toolbarItem.querySelector(".dropdown");
+  if (dropdown) {
+    dropdown.classList.toggle("visible");
+    button.classList.toggle("icon-active");
+  }
+}
 
-    if (dropdown) {
-      dropdown.classList.toggle("visible");
-      button.classList.toggle("icon-active");
+const DRAG_THRESHOLD = 6;
+
+iconButtons.forEach(button => {
+  let startX = null, startY = null, dragged = false;
+
+  button.addEventListener("mousedown", (e) => {
+    startX = e.clientX;
+    startY = e.clientY;
+    dragged = false;
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (startX === null) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if ((dx * dx + dy * dy) > (DRAG_THRESHOLD * DRAG_THRESHOLD)) {
+      dragged = true;
     }
+  });
+
+  document.addEventListener("mouseup", () => {
+    startX = null;
+    startY = null;
+  });
+
+  button.addEventListener("click", (e) => {
+    if (dragged) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    toggleDropdownFor(button);
   });
 });
 
