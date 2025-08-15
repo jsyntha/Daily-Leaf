@@ -111,4 +111,12 @@ footer {
   font-size: 0.9rem;
 }
 
-#time-section time { display: inline-block; min-width: 22ch; }
+
+#time-section {
+  color: black;
+}
+
+#time-section time { 
+  display: inline-block; min-width: 22ch;
+}
+

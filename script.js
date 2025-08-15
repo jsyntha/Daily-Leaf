@@ -136,7 +136,11 @@ document.querySelectorAll(".toolbar-item").forEach(item => {
   }
 
   tick();
-  setInterval(tick, 1000);
+  const align = 1000 - (Date.now() % 1000);
+  setTimeout(function run() {
+    tick();
+    setTimeout(run, 1000);
+  }, align);
 })();
 
 (function initTempUser() {
