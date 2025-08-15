@@ -47,34 +47,61 @@ iconButtons.forEach(button => {
 });
 
 document.querySelectorAll(".toolbar-item").forEach(item => {
-    const icon = item.querySelector(".icon");
-    let isDragging = false;
-    let offsetX = 0;
-    let offsetY = 0;
+  const icon = item.querySelector(".icon");
 
-    icon.addEventListener("mousedown", (e) => {
-        const rect = item.getBoundingClientRect();
-        const parentRect = item.parentElement.getBoundingClientRect();
-        offsetX = e.clientX - rect.left;
-        offsetY = e.clientY - rect.top;
-        item.style.position = "absolute";
-        item.style.left = rect.left - parentRect.left + "px";
-        item.style.top = rect.top - parentRect.top + "px";
-        item.style.zIndex = 1000;
-        isDragging = true;
-        e.preventDefault();
-    });
+  let isDragging = false;
+  let armed = false;
+  let startX = 0, startY = 0;
+  let offsetX = 0, offsetY = 0;
 
-    document.addEventListener("mousemove", (e) => {
-        if (!isDragging) return;
-        const toolbarRect = item.parentElement.getBoundingClientRect();
-        item.style.left = (e.clientX - toolbarRect.left - offsetX) + "px";
-        item.style.top = (e.clientY - toolbarRect.top - offsetY) + "px";
-    });
+  const DRAG_THRESHOLD = 6;
 
-    document.addEventListener("mouseup", () => {
-        isDragging = false;
-    });
+  icon.addEventListener("dragstart", e => e.preventDefault());
+
+  icon.addEventListener("mousedown", e => {
+    const rect = item.getBoundingClientRect();
+
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    isDragging = true;
+    armed = false;
+
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", e => {
+    if (!isDragging) return;
+
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    const movedEnough = (dx * dx + dy * dy) > (DRAG_THRESHOLD * DRAG_THRESHOLD);
+
+    if (!armed && movedEnough) {
+      const rect = item.getBoundingClientRect();
+      const parentRect = item.parentElement.getBoundingClientRect();
+      item.style.position = "absolute";
+      item.style.left = (rect.left - parentRect.left) + "px";
+      item.style.top  = (rect.top - parentRect.top) + "px";
+      item.style.zIndex = 1000;
+      armed = true;
+    }
+
+    if (armed) {
+      const parentRect = item.parentElement.getBoundingClientRect();
+      item.style.left = (e.clientX - parentRect.left - offsetX) + "px";
+      item.style.top  = (e.clientY - parentRect.top - offsetY) + "px";
+    }
+  });
+
+  document.addEventListener("mouseup", () => {
+    isDragging = false;
+    armed = false;
+    item.style.zIndex = "";
+  });
 });
 
 (function initDateTime() {
