@@ -137,7 +137,6 @@ footer {
   font-size: 0.9rem;
 }
 
-
 #time-section {
   color: black;
 }
@@ -145,4 +144,3 @@ footer {
 #time-section time { 
   display: inline-block; min-width: 22ch;
 }
-

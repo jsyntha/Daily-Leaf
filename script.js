@@ -54,8 +54,6 @@ document.querySelectorAll(".toolbar-item").forEach(item => {
   let startX = 0, startY = 0;
   let offsetX = 0, offsetY = 0;
 
-  const DRAG_THRESHOLD = 6;
-
   icon.addEventListener("dragstart", e => e.preventDefault());
 
   icon.addEventListener("mousedown", e => {
