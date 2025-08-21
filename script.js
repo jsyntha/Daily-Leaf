@@ -154,3 +154,100 @@ window.setDailyLeafUser = function(name) {
   const el = document.getElementById("user-name");
   if (el) el.textContent = String(name || "").trim() || "Leafling";
 };
+
+function getAppState() {
+  const user = (typeof localStorage !== "undefined" && localStorage.getItem("dl_user_name")) || "Leafling";
+  const toolbar = Array.from(document.querySelectorAll("#toolbar .toolbar-item")).map(item => {
+    const icon = item.querySelector(".icon");
+    const id = icon ? icon.id : null;
+    const position = item.style.position || null;
+    const left = item.style.left || null;
+    const top = item.style.top || null;
+    return { iconId: id, position, left, top };
+  });
+  return {
+    app: "DailyLeaf",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    user: { name: String(user || "") },
+    toolbar
+  };
+}
+
+function applyAppState(state) {
+  if (!state || state.app !== "DailyLeaf") return;
+  if (state.user && typeof state.user.name === "string") {
+    window.setDailyLeafUser(state.user.name);
+  }
+  if (Array.isArray(state.toolbar)) {
+    state.toolbar.forEach(entry => {
+      if (!entry || !entry.iconId) return;
+      const icon = document.getElementById(entry.iconId);
+      if (!icon) return;
+      const item = icon.closest(".toolbar-item");
+      if (!item) return;
+      if (entry.left != null && entry.top != null) {
+        item.style.position = "absolute";
+        item.style.left = typeof entry.left === "number" ? (entry.left + "px") : String(entry.left);
+        item.style.top  = typeof entry.top === "number" ? (entry.top + "px")  : String(entry.top);
+      }
+    });
+  }
+}
+
+function handleExportClick() {
+  const state = getAppState();
+  const text = JSON.stringify(state, null, 2);
+  const blob = new Blob([text], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const d = new Date();
+  const pad = n => String(n).padStart(2, "0");
+  const fname = "daily-leaf-export-" + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + pad(d.getHours()) + pad(d.getMinutes()) + pad(d.getSeconds()) + ".json";
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fname;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function handleImportClick() {
+  const input = document.createElement("input");
+  input.type = "file";
+  input.accept = "application/json";
+  input.onchange = function() {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function() {
+      try {
+        const data = JSON.parse(String(reader.result || "{}"));
+        applyAppState(data);
+        const el = document.getElementById("importexport-module");
+        if (el) el.textContent = "Imported settings applied";
+      } catch (e) {
+        alert("Import failed: invalid JSON");
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+function hookImportExportMenu() {
+  const icon = document.getElementById("import-export-icon");
+  if (!icon) return;
+  const item = icon.closest(".toolbar-item");
+  if (!item) return;
+  const entries = item.querySelectorAll(".dropdown .dropdown-item");
+  entries.forEach(entry => {
+    const label = (entry.textContent || "").trim().toLowerCase();
+    if (label === "export") {
+      entry.addEventListener("click", () => { handleExportClick(); toggleDropdownFor(icon); });
+    } else if (label === "import") {
+      entry.addEventListener("click", () => { handleImportClick(); toggleDropdownFor(icon); });
+    }
+  });
+}
+hookImportExportMenu();
