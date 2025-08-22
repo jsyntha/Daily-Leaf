@@ -144,3 +144,9 @@ footer {
 #time-section time { 
   display: inline-block; min-width: 22ch;
 }
+
+#todo-habit-icon img {
+  width: 64px;  /* Larger than the default 32px */
+  height: 64px;
+  border-radius: 12px;
+}
