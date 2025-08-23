@@ -145,8 +145,27 @@ footer {
   display: inline-block; min-width: 22ch;
 }
 
-#todo-habit-icon img {
-  width: 64px;  /* Larger than the default 32px */
+#toolbar img {
+  width: 64px;
   height: 64px;
   border-radius: 12px;
+}
+
+#accessibility {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  height: 64px;
+  width: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #6ec007;
+  border-radius: 12px;
+}
+
+#accessibility img {
+  width: 32px;
+  height: 32px;
 }
