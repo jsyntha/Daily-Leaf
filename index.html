@@ -85,9 +85,18 @@
         </div>
     </nav>
 
-    <button title="Accessibility" class="accessibility" id="accessibility" aria-label="Accessibility">
-        <img src="assets/pencil.svg" alt="Accessibility">
-    </button>
+    <div class="accessibility-wrapper">
+        <button title="Accessibility" class="accessibility" id="accessibility" aria-label="Accessibility">
+            <img src="assets/pencil.svg" alt="Accessibility">
+        </button>
+        <div class="dropdown" id="accessibility-dropdown">
+            <div class="dropdown-header">Font Colour:</div>
+            <div class="dropdown-item color-option" data-color="black">Black</div>
+            <div class="dropdown-item color-option" data-color="red">Red</div>
+            <div class="dropdown-item color-option" data-color="green">Green</div>
+            <div class="dropdown-item color-option" data-color="blue">Blue</div>
+        </div>
+    </div>
     <!--
     <main id="workspace" role="main">
         <section class="workspace" id="todo-module">todo</section>
