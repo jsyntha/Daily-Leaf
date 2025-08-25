@@ -86,35 +86,46 @@
     </nav>
 
     <div class="accessibility-wrapper">
-    <button title="Accessibility" class="accessibility" id="accessibility" aria-label="Accessibility">
-        <img src="assets/pencil.svg" alt="Accessibility">
-    </button>
-    <div class="dropdown" id="accessibility-dropdown">
-        <div class="dropdown-item" data-option="font-colour">Font Colour</div>
-        <div class="dropdown-item" data-option="font-style">Font Style</div>
-        <div class="dropdown-item" data-option="text-size">Text Size</div>
+        <button title="Accessibility" class="accessibility" id="accessibility" aria-label="Accessibility">
+            <img src="assets/pencil.svg" alt="Accessibility">
+        </button>
+        <div class="dropdown" id="accessibility-dropdown">
+            <div class="dropdown-item" data-option="font-colour">Font Colour</div>
+            <div class="dropdown-item" data-option="font-style">Font Style</div>
+            <div class="dropdown-item" data-option="text-size">Text Size</div>
+        </div>
+        <div class="dropdown sub-dropdown" id="font-colour-dropdown">
+            <div class="dropdown-header">Font Colour:</div>
+            <div class="dropdown-item color-option" data-color="black">Black</div>
+            <div class="dropdown-item color-option" data-color="red">Red</div>
+            <div class="dropdown-item color-option" data-color="green">Green</div>
+            <div class="dropdown-item color-option" data-color="blue">Blue</div>
+            <div class="dropdown-item previous-option">Previous</div>
+        </div>
+
+        <div class="dropdown sub-dropdown" id="font-style-dropdown">
+            <div class="dropdown-header">Font Style:</div>
+            <div class="font-style-options">
+                <div class="dropdown-item font-style-option" data-style="Segoe UI">Segoe UI</div>
+                <div class="dropdown-item font-style-option" data-style="Arial">Arial</div>
+                <div class="dropdown-item font-style-option" data-style="monospace">Monospace</div>
+                <div class="dropdown-item font-style-option" data-style="Georgia">Georgia</div>
+                <div class="dropdown-item font-style-option" data-style="Verdana">Verdana</div>
+                <div class="dropdown-item font-style-option" data-style="Courier New">Courier New</div>
+                <div class="dropdown-item font-style-option" data-style="">Default</div>
+                <div class="dropdown-item previous-option">Previous</div>
+            </div>
+        </div>
+
+        <div class="dropdown sub-dropdown" id="text-size-dropdown">
+            <div class="dropdown-item previous-option">Previous</div>
+            <div class="dropdown-header">Text Size:</div>
+            <div class="dropdown-item size-option" data-size="14px">Small</div>
+            <div class="dropdown-item size-option" data-size="16px">Default</div>
+            <div class="dropdown-item size-option" data-size="20px">Large</div>
+            <div class="dropdown-item size-option" data-size="24px">Extra Large</div>
+        </div>
     </div>
-    <div class="dropdown sub-dropdown" id="font-colour-dropdown">
-        <div class="dropdown-header">Font Colour:</div>
-        <div class="dropdown-item color-option" data-color="black">Black</div>
-        <div class="dropdown-item color-option" data-color="red">Red</div>
-        <div class="dropdown-item color-option" data-color="green">Green</div>
-        <div class="dropdown-item color-option" data-color="blue">Blue</div>
-    </div>
-    <div class="dropdown sub-dropdown" id="font-style-dropdown">
-        <div class="dropdown-header">Font Style:</div>
-        <div class="dropdown-item style-option" data-style="Segoe UI">Segoe UI</div>
-        <div class="dropdown-item style-option" data-style="monospace">Monospace</div>
-        <div class="dropdown-item style-option" data-style="Arial">Arial</div>
-    </div>
-    <div class="dropdown sub-dropdown" id="text-size-dropdown">
-        <div class="dropdown-header">Text Size:</div>
-        <div class="dropdown-item size-option" data-size="14px">Small</div>
-        <div class="dropdown-item size-option" data-size="16px">Default</div>
-        <div class="dropdown-item size-option" data-size="20px">Large</div>
-        <div class="dropdown-item size-option" data-size="24px">Extra Large</div>
-    </div>
-</div>
 
     <!--
     <main id="workspace" role="main">

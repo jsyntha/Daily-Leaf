@@ -128,20 +128,16 @@ document.addEventListener("DOMContentLoaded", function() {
         "text-size": document.getElementById("text-size-dropdown"),
     };
 
-    function closeAllAccessibility() {
-        mainDropdown.classList.remove("visible");
-        Object.values(subDropdowns).forEach(d => d.classList.remove("visible"));
-        mainBtn.classList.remove("icon-active");
-    }
-
     mainBtn.addEventListener("click", function(e) {
         e.stopPropagation();
         if (mainDropdown.classList.contains("visible")) {
-            closeAllAccessibility();
+            mainDropdown.classList.remove("visible");
+            mainBtn.classList.remove("icon-active");
+            Object.values(subDropdowns).forEach(d => d.classList.remove("visible"));
         } else {
-            closeAllAccessibility();
             mainDropdown.classList.add("visible");
             mainBtn.classList.add("icon-active");
+            Object.values(subDropdowns).forEach(d => d.classList.remove("visible"));
         }
     });
 
@@ -160,26 +156,29 @@ document.addEventListener("DOMContentLoaded", function() {
         dd.addEventListener("click", function(e) { e.stopPropagation(); });
     });
 
-    document.addEventListener("click", closeAllAccessibility);
-
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Escape") closeAllAccessibility();
-    });
-
     document.querySelectorAll(".color-option").forEach(option => {
         option.addEventListener("click", function(e) {
             const color = this.getAttribute("data-color");
             changeFontColor(color);
-            closeAllAccessibility();
         });
     });
 
-    document.querySelectorAll(".style-option").forEach(option => {
+    document.querySelectorAll(".font-style-option").forEach(option => {
         option.addEventListener("click", function(e) {
             const style = this.getAttribute("data-style");
-            document.body.style.fontFamily = style;
-            try { localStorage.setItem("dl_font_family", style); } catch {}
-            closeAllAccessibility();
+            if (style) {
+                document.body.style.setProperty("font-family", style, "important");
+                Array.from(document.querySelectorAll("*")).forEach(el => {
+                    el.style.setProperty("font-family", style, "important");
+                });
+                try { localStorage.setItem("dl_font_family", style); } catch {}
+            } else {
+                document.body.style.removeProperty("font-family");
+                Array.from(document.querySelectorAll("*")).forEach(el => {
+                    el.style.removeProperty("font-family");
+                });
+                try { localStorage.removeItem("dl_font_family"); } catch {}
+            }
         });
     });
 
@@ -188,17 +187,32 @@ document.addEventListener("DOMContentLoaded", function() {
             const size = this.getAttribute("data-size");
             document.body.style.fontSize = size;
             try { localStorage.setItem("dl_font_size", size); } catch {}
-            closeAllAccessibility();
         });
     });
 
     window.addEventListener("DOMContentLoaded", function() {
         const style = localStorage.getItem("dl_font_family");
-        if (style) document.body.style.fontFamily = style;
+        if (style) {
+            document.body.style.setProperty("font-family", style, "important");
+            Array.from(document.querySelectorAll("*")).forEach(el => {
+                el.style.setProperty("font-family", style, "important");
+            });
+        }
         const size = localStorage.getItem("dl_font_size");
         if (size) document.body.style.fontSize = size;
     });
+
+    document.querySelectorAll(".previous-option").forEach(option => {
+        option.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const dropdown = this.closest(".sub-dropdown");
+            if (dropdown) dropdown.classList.remove("visible");
+            const mainDropdown = document.getElementById("accessibility-dropdown");
+            if (mainDropdown) mainDropdown.classList.add("visible");
+        });
+    });
 })();
+
 
 (function initDateTime() {
     const el = document.getElementById("date-time");
