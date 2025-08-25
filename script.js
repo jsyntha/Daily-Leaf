@@ -14,15 +14,6 @@ function toggleDropdownFor(button) {
     }
 }
 
-function toggleAccessibilityDropdown() {
-    const dropdown = document.getElementById("accessibility-dropdown");
-    const button = document.getElementById("accessibility");
-    if (dropdown) {
-        dropdown.classList.toggle("visible");
-        button.classList.toggle("icon-active");
-    }
-}
-
 const DRAG_THRESHOLD = 6;
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -120,25 +111,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    const accessibilityBtn = document.getElementById("accessibility");
-    if (accessibilityBtn) {
-        accessibilityBtn.addEventListener("click", function(e) {
-            e.stopPropagation();
-            toggleAccessibilityDropdown();
-        });
-    }
-
-    document.querySelectorAll(".color-option").forEach(option => {
-        option.addEventListener("click", function(e) {
-            e.stopPropagation();
-            const color = this.getAttribute("data-color");
-            changeFontColor(color);
-            const dropdown = this.closest(".dropdown");
-            const button = dropdown.parentElement.querySelector(".icon");
-            if (button) toggleDropdownFor(button);
-        });
-    });
-
     document.addEventListener("keydown", function(e) {
         if (e.key === "Escape") closeAllDropdowns();
     });
@@ -146,6 +118,87 @@ document.addEventListener("DOMContentLoaded", function() {
     hookImportExportMenu();
     loadSavedFontColor && loadSavedFontColor();
 });
+
+(function() {
+    const mainBtn = document.getElementById("accessibility");
+    const mainDropdown = document.getElementById("accessibility-dropdown");
+    const subDropdowns = {
+        "font-colour": document.getElementById("font-colour-dropdown"),
+        "font-style": document.getElementById("font-style-dropdown"),
+        "text-size": document.getElementById("text-size-dropdown"),
+    };
+
+    function closeAllAccessibility() {
+        mainDropdown.classList.remove("visible");
+        Object.values(subDropdowns).forEach(d => d.classList.remove("visible"));
+        mainBtn.classList.remove("icon-active");
+    }
+
+    mainBtn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        if (mainDropdown.classList.contains("visible")) {
+            closeAllAccessibility();
+        } else {
+            closeAllAccessibility();
+            mainDropdown.classList.add("visible");
+            mainBtn.classList.add("icon-active");
+        }
+    });
+
+    mainDropdown.querySelectorAll(".dropdown-item").forEach(item => {
+        item.addEventListener("click", function(e) {
+            e.stopPropagation();
+            const key = this.getAttribute("data-option");
+            Object.entries(subDropdowns).forEach(([k, d]) => {
+                if (k === key) d.classList.toggle("visible");
+                else d.classList.remove("visible");
+            });
+        });
+    });
+
+    Object.values(subDropdowns).forEach(dd => {
+        dd.addEventListener("click", function(e) { e.stopPropagation(); });
+    });
+
+    document.addEventListener("click", closeAllAccessibility);
+
+    document.addEventListener("keydown", function(e) {
+        if (e.key === "Escape") closeAllAccessibility();
+    });
+
+    document.querySelectorAll(".color-option").forEach(option => {
+        option.addEventListener("click", function(e) {
+            const color = this.getAttribute("data-color");
+            changeFontColor(color);
+            closeAllAccessibility();
+        });
+    });
+
+    document.querySelectorAll(".style-option").forEach(option => {
+        option.addEventListener("click", function(e) {
+            const style = this.getAttribute("data-style");
+            document.body.style.fontFamily = style;
+            try { localStorage.setItem("dl_font_family", style); } catch {}
+            closeAllAccessibility();
+        });
+    });
+
+    document.querySelectorAll(".size-option").forEach(option => {
+        option.addEventListener("click", function(e) {
+            const size = this.getAttribute("data-size");
+            document.body.style.fontSize = size;
+            try { localStorage.setItem("dl_font_size", size); } catch {}
+            closeAllAccessibility();
+        });
+    });
+
+    window.addEventListener("DOMContentLoaded", function() {
+        const style = localStorage.getItem("dl_font_family");
+        if (style) document.body.style.fontFamily = style;
+        const size = localStorage.getItem("dl_font_size");
+        if (size) document.body.style.fontSize = size;
+    });
+})();
 
 (function initDateTime() {
     const el = document.getElementById("date-time");

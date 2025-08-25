@@ -197,6 +197,31 @@ footer {
   display: flex;
   opacity: 1;
   transform: translateY(0);
+  padding: 10px;
+}
+
+.sub-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 0.5rem;
+  min-width: 170px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: none;
+  flex-direction: column;
+  gap: 0.3rem;
+  z-index: 1003;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.15s, transform 0.15s;
+}
+.sub-dropdown.visible {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
+  padding: 10px;
 }
 
 .dropdown-header {
@@ -204,6 +229,7 @@ footer {
   padding: 0.5rem;
   background-color: #f0f0f0;
   border-bottom: 1px solid #ccc;
+  text-align: center;
 }
 
 .color-option {
