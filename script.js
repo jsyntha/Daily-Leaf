@@ -117,6 +117,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
     hookImportExportMenu();
     loadSavedFontColor && loadSavedFontColor();
+
+    const savedColor = localStorage.getItem("dl_font_color");
+    if (savedColor) {
+        document.querySelectorAll(".color-option").forEach(opt => {
+            if (opt.getAttribute("data-color") === savedColor) {
+                opt.classList.add("selected");
+            }
+        });
+    }
+    const savedStyle = localStorage.getItem("dl_font_family");
+    if (savedStyle) {
+        document.querySelectorAll(".font-style-option").forEach(opt => {
+            if (opt.getAttribute("data-style") === savedStyle) {
+                opt.classList.add("selected");
+            }
+        });
+    }
+    const savedSize = localStorage.getItem("dl_font_size");
+    if (savedSize) {
+        document.querySelectorAll(".size-option").forEach(opt => {
+            if (opt.getAttribute("data-size") === savedSize) {
+                opt.classList.add("selected");
+            }
+        });
+    }
 });
 
 (function() {
@@ -158,13 +183,19 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll(".color-option").forEach(option => {
         option.addEventListener("click", function(e) {
+            document.querySelectorAll(".color-option").forEach(opt => opt.classList.remove("selected"));
+            this.classList.add("selected");
             const color = this.getAttribute("data-color");
             changeFontColor(color);
+            try { localStorage.setItem("dl_selected_font_color", color); } catch {}
+            try { localStorage.setItem("dl_font_color", color); } catch {}
         });
     });
 
     document.querySelectorAll(".font-style-option").forEach(option => {
         option.addEventListener("click", function(e) {
+            document.querySelectorAll(".font-style-option").forEach(opt => opt.classList.remove("selected"));
+            this.classList.add("selected");
             const style = this.getAttribute("data-style");
             if (style) {
                 document.body.style.setProperty("font-family", style, "important");
@@ -184,6 +215,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.querySelectorAll(".size-option").forEach(option => {
         option.addEventListener("click", function(e) {
+            document.querySelectorAll(".size-option").forEach(opt => opt.classList.remove("selected"));
+            this.classList.add("selected");
             const size = this.getAttribute("data-size");
             document.body.style.fontSize = size;
             try { localStorage.setItem("dl_font_size", size); } catch {}

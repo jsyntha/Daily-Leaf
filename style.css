@@ -297,3 +297,12 @@ footer {
 .font-style-up:active, .font-style-down:active {
   background: #c7efb0;
 }
+
+.dropdown-item.selected,
+.color-option.selected,
+.font-style-option.selected,
+.size-option.selected {
+    background-color: #e6f7df !important;
+    border-color: #6ec007 !important;
+    color: #2b7300 !important;
+}
